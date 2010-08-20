@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<uw:form
+	xmlns:uw="http://www.projet-uniweb.org/ns/uniweb"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.projet-uniweb.org/ns/uniweb 
+											http://www.projet-uniweb.org/ns/uniweb/uniweb.xsd" >
+	
+	<uw:textbox id="txtFirstName" label="First name:" maxlength="15" />
+	<uw:textbox id="txtLastName" label="Last name:" maxlength="15" />
+	<uw:textbox id="txtCompanyName" label="Company name:" maxlength="25" />
+	<uw:textbox id="txtAddress" label="Address:" maxlength="50" />
+	<uw:select id="ddlCity" label="City:">
+		<uw:option label="Laval" value="LVL" />
+		<uw:option label="Montreal" value="MTL" />
+	</uw:select>
+	<uw:select id="ddlProvince" label="State:">
+		<uw:option label="fdsa" value="fdsa"/>
+	</uw:select>
+	<uw:textarea id="txtComments" label="Comments:" />
+</uw:form>

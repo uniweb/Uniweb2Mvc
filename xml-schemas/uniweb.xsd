@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="http://www.projet-uniweb.org/ns/uniweb"
+					 xmlns:uw="http://www.projet-uniweb.org/ns/uniweb"
+					 elementFormDefault="qualified"
+					 version="0.1"
+					 xml:lang="en"
+>
+	<xs:element name="interface">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="uw:styles" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="uw:scripts" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="uw:form" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			
+			<xs:attribute name="id" type="xs:ID" use="optional" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="styles">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="uw:stylesheet" minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="stylesheet">
+		<xs:complexType>
+			<xs:attribute name="href" type="xs:anyURI" use="required" />
+			<xs:attribute name="type" use="optional">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="basic" />
+						<xs:enumeration value="enhanced" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="scripts">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="uw:script" minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="script">
+		<xs:complexType>
+			<xs:attribute name="src" type="xs:anyURI" use="required" />
+		</xs:complexType>
+	</xs:element>
+	
+  <xs:element name="form">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="uw:controls" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="uw:select" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="uw:textarea" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="uw:checkbox" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="uw:textbox" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="uw:email" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="uw:url" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="uw:errorlist" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+			
+			<xs:attribute name="action" type="xs:anyURI" use="required" />
+			<xs:attribute name="method">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="get" />
+						<xs:enumeration value="post" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+	</xs:complexType>
+  </xs:element>
+
+	<xs:element name="textbox">
+		<xs:complexType mixed="false">
+
+			<xs:attributeGroup ref="uw:identificationAttributes" />
+			<xs:attributeGroup ref="uw:formFieldAttributes" />
+			<xs:attributeGroup ref="uw:mandatoryFormFieldAttributes" />
+
+			<xs:attribute name="maxlength" type="xs:integer" use="required" />
+			<xs:attribute name="value" type="xs:string" use="optional" />
+
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="checkbox">
+		<xs:complexType>
+			<xs:attributeGroup ref="uw:identificationAttributes" />
+			<xs:attributeGroup ref="uw:formFieldAttributes" />
+			
+			<xs:attribute name="checkedvalue" type="xs:string" use="required" />
+			<xs:attribute name="uncheckedvalue" type="xs:string" use="optional" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="select">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="uw:option" maxOccurs="unbounded" />
+				<xs:element ref="uw:optiondatasource" maxOccurs="1" />
+			</xs:choice>
+
+			<xs:attributeGroup ref="uw:identificationAttributes" />
+			<xs:attributeGroup ref="uw:formFieldAttributes" />
+		</xs:complexType>
+		
+		<xs:unique name="onlyOneSelectedOptionForEachSelect" >
+			<xs:selector xpath="uw:option" />
+			<xs:field xpath="@selected" />
+		</xs:unique>
+	</xs:element>
+
+  <xs:element name="option">
+	<xs:complexType>
+	  <xs:attribute name="label" type="xs:string" use="required" />
+	  <xs:attribute name="value" type="xs:string" use="required" />
+		<xs:attribute name="selected" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="selected" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	</xs:element>
+
+  <xs:element name="optiondatasource">
+	<xs:complexType>
+	  <xs:attribute name="sourcename" type="xs:string" use="required" />
+	  <xs:attribute name="labelkey" type="xs:string" use="required" />
+	  <xs:attribute name="valuekey" type="xs:string" use="required" />
+	  <xs:attribute name="selectedValue" type="xs:string" use="required" />
+	</xs:complexType>
+  </xs:element>
+
+	<xs:element name="textarea">
+		<xs:complexType>
+			<xs:attributeGroup ref="uw:identificationAttributes" />
+			<xs:attributeGroup ref="uw:formFieldAttributes" />
+			<xs:attributeGroup ref="uw:mandatoryFormFieldAttributes" />
+
+			<xs:attribute name="value" type="xs:string" use="optional" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="email">
+		<xs:complexType>
+			<xs:attributeGroup ref="uw:identificationAttributes" />
+			<xs:attributeGroup ref="uw:formFieldAttributes" />
+			<xs:attributeGroup ref="uw:mandatoryFormFieldAttributes" />
+			
+			<xs:attribute name="maxlength" type="xs:integer" use="required" />
+			<xs:attribute name="value" type="xs:string" use="optional" />
+			
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="url">
+		<xs:complexType>
+			<xs:attributeGroup ref="uw:identificationAttributes" />
+			<xs:attributeGroup ref="uw:formFieldAttributes" />
+			<xs:attributeGroup ref="uw:mandatoryFormFieldAttributes" />
+
+			<xs:attribute name="maxlength" type="xs:integer" use="required" />
+			<xs:attribute name="value" type="xs:string" use="optional" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="errorlist">
+		<xs:complexType>
+			<xs:attribute name="id" type="xs:ID" use="optional" />
+			<xs:attribute name="errorlistkey" type="xs:string" use="required" />
+			<xs:attribute name="errormessagekey" type="xs:string" use="required" />
+			<xs:attribute name="erronousfieldidkey" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="controls">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="uw:savebutton" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+			<xs:attribute name="display">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="bottom" />
+						<xs:enumeration value="top" />
+						<xs:enumeration value="both" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="savebutton">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="uw:img" minOccurs="0" maxOccurs="1" />
+			</xs:choice>
+			
+			<xs:attributeGroup ref="uw:identificationAttributes" />
+			<xs:attribute name="text" type="xs:string" use="optional" />
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="img">
+		<xs:complexType>
+			<xs:attributeGroup ref="uw:identificationAttributes" />
+			<xs:attribute name="src" type="xs:anyURI" use="required" />
+			<xs:attribute name="alt" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="include">
+		<xs:complexType>
+			<xs:attribute name="src" type="xs:anyURI" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:attributeGroup name="identificationAttributes">
+		<xs:attribute name="id" type="xs:ID" use="required" />
+		<xs:attribute name="name" type="xs:string" use="optional" />
+	</xs:attributeGroup>
+	
+	<xs:attributeGroup name="formFieldAttributes">
+		<xs:attribute name="label" type="xs:string" use="required" />
+		<xs:attribute name="placeholder" type="xs:string" use="optional" />
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="mandatoryFormFieldAttributes">
+		<xs:attribute name="mandatory" type="xs:boolean" use="optional" default="false" />
+	</xs:attributeGroup>
+</xs:schema>
