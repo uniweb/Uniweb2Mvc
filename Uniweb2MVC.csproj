@@ -64,11 +64,14 @@
   </Target>
   -->
   <ItemGroup>
+    <None Include="COPYING" />
+    <None Include="COPYING.LESSER" />
     <None Include="DTD\xhtml.soc" />
     <None Include="DTD\xhtml1-frameset.dtd" />
     <None Include="DTD\xhtml1-strict.dtd" />
     <None Include="DTD\xhtml1-transitional.dtd" />
     <None Include="DTD\xhtml1.dcl" />
+    <None Include="README" />
     <None Include="xml-schemas\uniweb.xsd" />
   </ItemGroup>
   <ItemGroup>
